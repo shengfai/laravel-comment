@@ -33,7 +33,13 @@ class CommentResource extends JsonResource
                 return new CommentResource($this->parent);
             }),
             'message' => $this->message,
-            'created_at' => $this->created_at_format
+            'created_at' => [
+                'date' => $this->created_at->toDateString(),
+                'year' => $this->created_at->year,
+                'mouth' => $this->created_at->month,
+                'datetime' => $this->created_at->toDateTimeString(),
+                'friendly_time' => $this->created_at->diffForHumans()
+            ]
         ];
     }
 }
