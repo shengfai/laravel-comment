@@ -1,0 +1,20 @@
+{
+    "name": "shengfai\/laravel-comment",
+    "description": "This module provides commenting functionality for your website or application",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shengfai",
+            "email": "shengfai@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "laravel/framework": ">=5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shengfai\\LaravelComment\\": "src"
+        }
+    }
+}
