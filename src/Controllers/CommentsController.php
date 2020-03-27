@@ -86,7 +86,21 @@ class CommentsController extends Controller
         
         $comment->delete();
         
-        return response()->noContent();
+        return \response()->noContent();
+    }
+
+    /**
+     * 举报投诉
+     *
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function complain(Request $request, Comment $comment)
+    {
+        $comment->increment('complaints_count');
+        
+        return \response(null, 201);
     }
 
     /**

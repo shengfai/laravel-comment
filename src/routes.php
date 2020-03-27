@@ -1,6 +1,6 @@
 <?php
 
-Route::post('comments', config('comments.controller') . '@store')->name('comments.store');
+Route::post('comments/{comment}/complaints', config('comments.controller') . '@complain')->name('comments.complain');
 Route::delete('comments/{comment}', config('comments.controller') . '@destroy')->name('comments.destroy');
-Route::put('comments/{comment}', config('comments.controller') . '@update')->name('comments.update');
-Route::post('comments/{comment}', config('comments.controller') . '@reply')->name('comments.reply');
+Route::get('{target}/{id}/comments', config('comments.controller') . '@index')->name('comments.index');
+Route::post('{target}/{id}/comments', config('comments.controller') . '@store')->name('comments.store');
