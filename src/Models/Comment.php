@@ -5,6 +5,10 @@ namespace Shengfai\LaravelComment\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Overtrue\LaravelLike\Traits\Likeable;
+use Shengfai\LaravelComment\Events\Commented;
+use Shengfai\LaravelComment\Events\CommentApproved;
+use Shengfai\LaravelComment\Events\CommentComplained;
 
 /**
  * 评论模型
@@ -16,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Likeable;
     
     /**
      * The attributes that are mass assignable.
@@ -32,6 +36,36 @@ class Comment extends Model
         'complaints_count',
         'approved'
     ];
+    
+    /**
+     * The event map for the model.
+     *
+     * Allows for object-based events for native Eloquent events.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => Commented::class
+    ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::updated(function ($comment) {
+            
+            if ($comment->wasChanged('complaints_count')) {
+                event(new CommentComplained($comment));
+            }
+            
+            if ($comment->wasChanged('approved')) {
+                event(new CommentApproved($comment));
+            }
+        });
+    }
 
     /**
      * 可评论对象
