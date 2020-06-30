@@ -17,5 +17,12 @@
         "psr-4": {
             "Shengfai\\LaravelComment\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Shengfai\\LaravelComment\\CommentServiceProvider"
+            ]
+        }
     }
 }
